@@ -1,3 +1,3 @@
-module github.com/aquilax/go-perlin
+module github.com/FixtureMapper/go-perlin
 
-go 1.13
+go 1.21

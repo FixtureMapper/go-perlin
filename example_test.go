@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 
-	"github.com/aquilax/go-perlin"
+	"github.com/FixtureMapper/go-perlin"
 )
 
 const (

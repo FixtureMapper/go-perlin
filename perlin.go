@@ -1,8 +1,9 @@
+package perlin
+
 // Package perlin provides coherent noise function over 1, 2 or 3 dimensions
 // This code is go adaptation based on C implementation that can be found here:
 // http://git.gnome.org/browse/gegl/tree/operations/common/perlin/perlin.c
 // (original copyright Ken Perlin)
-package perlin
 
 import (
 	"math"
@@ -11,8 +12,8 @@ import (
 
 // General constants
 const (
-	B  = 0x100
-	N  = 0x1000
+	B  = 0x10
+	N  = 0x100
 	BM = 0xff
 )
 
@@ -30,7 +31,7 @@ type Perlin struct {
 
 // NewPerlin creates new Perlin noise generator
 // In what follows "alpha" is the weight when the sum is formed.
-// Typically it is 2, As this approaches 1 the function is noisier.
+// Typically, it is 2, As this approaches 1 the function is noisier.
 // "beta" is the harmonic scaling/spacing, typically 2, n is the
 // number of iterations and seed is the math.rand seed value to use
 func NewPerlin(alpha, beta float64, n int32, seed int64) *Perlin {
@@ -39,7 +40,7 @@ func NewPerlin(alpha, beta float64, n int32, seed int64) *Perlin {
 
 // NewPerlinRandSource creates new Perlin noise generator
 // In what follows "alpha" is the weight when the sum is formed.
-// Typically it is 2, As this approaches 1 the function is noisier.
+// Typically, it is 2, As this approaches 1 the function is noisier.
 // "beta" is the harmonic scaling/spacing, typically 2, n is the
 // number of iterations and source is source of pseudo-random int64 values
 func NewPerlinRandSource(alpha, beta float64, n int32, source rand.Source) *Perlin {
