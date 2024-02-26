@@ -53,7 +53,7 @@ func NewPerlinRandSource(alpha, beta float64, n int32, source rand.Source) *Perl
 
 	r := rand.New(source)
 
-	for i = 0; i < B; i++ {
+	for i = range B {
 		p.p[i] = i
 		p.g1[i] = float64((r.Int32()%(B+B))-B) / B
 
@@ -74,7 +74,7 @@ func NewPerlinRandSource(alpha, beta float64, n int32, source rand.Source) *Perl
 		p.p[i], p.p[j] = p.p[j], p.p[i]
 	}
 
-	for i = 0; i < B+2; i++ {
+	for i = range B + 2 {
 		p.p[B+i], p.g1[B+i] = p.p[i], p.g1[i]
 		for j = 0; j < 2; j++ {
 			p.g2[B+i][j] = p.g2[i][j]
@@ -235,10 +235,9 @@ func (p *Perlin) noise3(vec [3]float64) float64 {
 func (p *Perlin) Noise1D(x float64) float64 {
 	var scale float64 = 1
 	var sum, val float64
-	var i int32
 	px := x
 
-	for i = 0; i < p.n; i++ {
+	for range p.n {
 		val = p.noise1(px)
 		sum += val / scale
 		scale *= p.alpha
@@ -251,10 +250,9 @@ func (p *Perlin) Noise1D(x float64) float64 {
 func (p *Perlin) Noise2D(x, y float64) float64 {
 	var scale float64 = 1
 	var sum, val float64
-	var i int32
 	px := [2]float64{x, y}
 
-	for i = 0; i < p.n; i++ {
+	for range p.n {
 		val = p.noise2(px)
 		sum += val / scale
 		scale *= p.alpha
@@ -268,14 +266,13 @@ func (p *Perlin) Noise2D(x, y float64) float64 {
 func (p *Perlin) Noise3D(x, y, z float64) float64 {
 	var scale float64 = 1
 	var sum, val float64
-	var i int32
 	px := [3]float64{x, y, z}
 
 	if z < 0.0000 {
 		return p.Noise2D(x, y)
 	}
 
-	for i = 0; i < p.n; i++ {
+	for range p.n {
 		val = p.noise3(px)
 		sum += val / scale
 		scale *= p.alpha
