@@ -2,42 +2,43 @@ package perlin_test
 
 import (
 	"fmt"
-	"math/rand"
+	"math/rand/v2"
 
 	"github.com/FixtureMapper/go-perlin"
 )
 
 const (
-	alpha       = 2.
-	beta        = 2.
-	n           = 3
-	seed  int64 = 100
+	alpha        = 2.
+	beta         = 2.
+	n            = 3
+	seed1 uint64 = 100
+	seed2 uint64 = 200
 )
 
 func ExampleNewPerlinRandSource() {
-	p := perlin.NewPerlinRandSource(alpha, beta, n, rand.NewSource(seed))
+	p := perlin.NewPerlinRandSource(alpha, beta, n, rand.New(rand.NewPCG(seed1, seed2)))
 	for x := 0.; x < 3; x++ {
 		fmt.Printf("%0.0f;%0.4f\n", x, p.Noise1D(x/10))
 	}
 	// Output:
 	// 0;0.0000
-	// 1;-0.0086
-	// 2;-0.0017
+	// 1;0.2229
+	// 2;0.3133
 }
 
 func ExamplePerlin_Noise1D() {
-	p := perlin.NewPerlin(alpha, beta, n, seed)
+	p := perlin.NewPerlin(alpha, beta, n, seed1, seed2)
 	for x := 0.; x < 3; x++ {
 		fmt.Printf("%0.0f;%0.4f\n", x, p.Noise1D(x/10))
 	}
 	// Output:
 	// 0;0.0000
-	// 1;-0.0086
-	// 2;-0.0017
+	// 1;0.2229
+	// 2;0.3133
 }
 
 func ExamplePerlin_Noise2D() {
-	p := perlin.NewPerlin(alpha, beta, n, seed)
+	p := perlin.NewPerlin(alpha, beta, n, seed1, seed2)
 	for x := 0.; x < 2; x++ {
 		for y := 0.; y < 2; y++ {
 			fmt.Printf("%0.0f;%0.0f;%0.4f\n", x, y, p.Noise2D(x/10, y/10))
@@ -45,13 +46,13 @@ func ExamplePerlin_Noise2D() {
 	}
 	// Output:
 	// 0;0;0.0000
-	// 0;1;-0.2002
-	// 1;0;-0.3389
-	// 1;1;-0.5045
+	// 0;1;-0.1386
+	// 1;0;-0.0580
+	// 1;1;-0.1245
 }
 
 func ExamplePerlin_Noise3D() {
-	p := perlin.NewPerlin(alpha, beta, n, seed)
+	p := perlin.NewPerlin(alpha, beta, n, seed1, seed2)
 	for x := 0.; x < 2; x++ {
 		for y := 0.; y < 2; y++ {
 			for z := 0.; z < 2; z++ {
@@ -61,11 +62,11 @@ func ExamplePerlin_Noise3D() {
 	}
 	// Output:
 	// 0;0;0;0.0000
-	// 0;0;1;0.2616
-	// 0;1;0;-0.0755
-	// 0;1;1;0.2020
-	// 1;0;0;-0.2138
-	// 1;0;1;0.0616
-	// 1;1;0;-0.2208
-	// 1;1;1;0.0304
+	// 0;0;1;0.2477
+	// 0;1;0;0.0849
+	// 0;1;1;0.2471
+	// 1;0;0;-0.0934
+	// 1;0;1;0.0908
+	// 1;1;0;0.0129
+	// 1;1;1;0.1485
 }

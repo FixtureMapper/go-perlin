@@ -7,13 +7,13 @@ package perlin
 
 import (
 	"math"
-	"math/rand"
+	"math/rand/v2"
 )
 
 // General constants
 const (
-	B  = 0x10
-	N  = 0x100
+	B  = 0x100
+	N  = 0x1000
 	BM = 0xff
 )
 
@@ -34,8 +34,8 @@ type Perlin struct {
 // Typically, it is 2, As this approaches 1 the function is noisier.
 // "beta" is the harmonic scaling/spacing, typically 2, n is the
 // number of iterations and seed is the math.rand seed value to use
-func NewPerlin(alpha, beta float64, n int32, seed int64) *Perlin {
-	return NewPerlinRandSource(alpha, beta, n, rand.NewSource(seed))
+func NewPerlin(alpha, beta float64, n int32, seed1, seed2 uint64) *Perlin {
+	return NewPerlinRandSource(alpha, beta, n, rand.New(rand.NewPCG(seed1, seed2)))
 }
 
 // NewPerlinRandSource creates new Perlin noise generator
@@ -55,22 +55,22 @@ func NewPerlinRandSource(alpha, beta float64, n int32, source rand.Source) *Perl
 
 	for i = 0; i < B; i++ {
 		p.p[i] = i
-		p.g1[i] = float64((r.Int31()%(B+B))-B) / B
+		p.g1[i] = float64((r.Int32()%(B+B))-B) / B
 
 		for j = 0; j < 2; j++ {
-			p.g2[i][j] = float64((r.Int31()%(B+B))-B) / B
+			p.g2[i][j] = float64((r.Int32()%(B+B))-B) / B
 		}
 
 		normalize2(&p.g2[i])
 
 		for j = 0; j < 3; j++ {
-			p.g3[i][j] = float64((r.Int31()%(B+B))-B) / B
+			p.g3[i][j] = float64((r.Int32()%(B+B))-B) / B
 		}
 		normalize3(&p.g3[i])
 	}
 
 	for ; i > 0; i-- {
-		j = r.Int31() % B
+		j = r.Int32() % B
 		p.p[i], p.p[j] = p.p[j], p.p[i]
 	}
 

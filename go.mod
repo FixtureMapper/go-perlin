@@ -1,3 +1,3 @@
 module github.com/FixtureMapper/go-perlin
 
-go 1.21
+go 1.22
